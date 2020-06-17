@@ -1,0 +1,31 @@
+.searchContainer {
+  display: flex;
+  justify-content: center;
+  background-image: url('https://image.tmdb.org/t/p/w1920_and_h600_multi_faces_filter(duotone,032541,01b4e4)/r2NcIZ1FPMlxCty3vRITVTgGNVS.jpg');
+  height: 300px;
+  padding-top: 100px;
+}
+
+.searchInput {
+  border-radius: 30px!important;
+  width: 75%!important;
+}
+.searchInput:hover {
+  outline: none;
+}
+
+.searchButton {
+  height: 48px;
+  padding: 10px 35px;
+  border: none;
+  background: rgb(144,238,144);
+  border-radius: 30px;
+  color: rgba(255,255,255, 1);
+  margin-left: -50px;
+  font-size: 18px;
+  text-decoration: none;
+}
+.searchButton:hover {
+  text-decoration: none;
+  color: #fff;
+}

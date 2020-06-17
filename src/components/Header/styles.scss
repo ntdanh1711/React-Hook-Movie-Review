@@ -1,0 +1,31 @@
+.paddingMenuItem {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+ 
+.header {
+    background-color: rgb(6, 44, 86);
+    justify-content: center;
+    display: flex;
+}
+.faSearch,
+.faPlus {
+  padding: 0 5px;
+  cursor: pointer;
+}
+
+.faSearch {
+  color: #6374eb;
+}
+.faPlus {
+  color: #ffffff;
+}
+ 
+@media screen and (min-width: 1280px) {
+    .header {
+        &__content {
+            background-color: rgb(6, 44, 86);
+            width: 1280px;
+        }
+    }
+}

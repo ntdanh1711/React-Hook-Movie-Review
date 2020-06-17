@@ -2,12 +2,14 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Media, Spinner } from 'reactstrap';
 import Pagination from 'react-js-pagination';
+import { Link } from 'react-router-dom';
 
-import Header from '../../components/Header/Header';
-import SearchBar from '../../components/SearchBar/SearchBar';
+import Header from '../../components/Header';
+import SearchBar from '../../components/SearchBar';
 import UtilsContext from '../../context/utilsContext';
 import search from '../../services/searchServices';
 import SearchContext from '../../context/searchContext';
+import { replaceAll } from '../../utils/customString';
 
 import styles from './styles.scss';
 
@@ -39,25 +41,27 @@ const SearchPage = () => {
   }, [state, state.movieList]);
 
   const renderSearchMovieList = () => movieList?.results.map((mv) => (
-    <Media key={mv.id} className={styles.movieCard}>
-      <Media left href="#">
-        <Media
-          object
-          data-src={`https://image.tmdb.org/t/p/w94_and_h141_bestv2${mv.poster_path}`}
-          src={`https://image.tmdb.org/t/p/w94_and_h141_bestv2${mv.poster_path}`}
-          alt={mv.title}
-          className={styles.moviePoster}
-        />
-      </Media>
-      <Media body className={styles.movieBody}>
-        <Media heading>
-          {mv.original_title}
+    <Link key={mv.id} to={`movie/${mv.id}-${replaceAll(mv.title, ' ', '-')}`} className={styles.movieCard}>
+      <Media>
+        <Media left href="#">
+          <Media
+            object
+            data-src={`https://image.tmdb.org/t/p/w94_and_h141_bestv2${mv.poster_path}`}
+            src={`https://image.tmdb.org/t/p/w94_and_h141_bestv2${mv.poster_path}`}
+            alt={mv.title}
+            className={styles.moviePoster}
+          />
         </Media>
-        <div className={styles.movieDes}>
-          {mv.overview}
-        </div>
+        <Media body className={styles.movieBody}>
+          <Media heading>
+            {mv.original_title}
+          </Media>
+          <div className={styles.movieDes}>
+            {mv.overview}
+          </div>
+        </Media>
       </Media>
-    </Media>
+    </Link>
   ));
 
   return (

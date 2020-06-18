@@ -47,15 +47,16 @@
 .popularList {
     display: flex;
     width: 100%;
+    max-width: 1238px;
     overflow-x: auto;
     min-height: 400px;
 }
 
-// @media screen and (min-width: 1280px) {
-//     .popularList {
-//         width: 1280px;
-//     }
-//     .popularItem {
-//         padding: 15px 10px 25px 10px;
-//     }
-// }
+@media screen and (min-width: 1280px) {
+    .popularList {
+        width: 1280px;
+    }
+    .popularItem {
+        padding: 15px 10px 25px 10px;
+    }
+}

@@ -1,0 +1,36 @@
+.categoryTable {
+  flex: 0.2;
+  margin-top: 10px;
+  border-radius: 10px;
+  margin-right: 50px;
+  &__item {
+    display: flex!important;
+    justify-content: space-between!important;
+    cursor: pointer;
+    font-size: 1em!important;
+    border-bottom: 0!important;
+    border-top: 0!important;
+    &__last {
+      display: flex!important;
+      justify-content: space-between;
+      cursor: pointer;
+    }
+    &__title {
+      font-size: 1.2em!important;
+      font-weight: bold;
+    }
+  }
+}
+
+.selected {
+  background-color: rgba(0,0,0,0.08)!important;
+  font-weight: 600;
+}
+
+.badge {
+  background-color: rgba(0,0,0,0.08)!important;
+  color: #000!important;
+  font-weight: normal!important;
+  padding: 6px 15px !important;
+  border-radius: 8px!important;
+}

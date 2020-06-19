@@ -27,7 +27,8 @@
 
 .loading {
   @extend .noContent;
-  margin: 250px 0;
+  margin: 100px 0;
+  justify-content: center;
   &__spinner {
     width: 3rem;
     height: 3rem;

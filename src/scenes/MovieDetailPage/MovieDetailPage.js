@@ -19,7 +19,7 @@ const MovieDetailPage = () => {
       <MovieModal
         isOpenWatchModel={isOpenModal}
         urlMovieWatch={url}
-        onBlurModal={() => setOpenModal(false)}
+        toggleClose={() => setOpenModal(false)}
       />
     </div>
   );

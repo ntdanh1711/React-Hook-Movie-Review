@@ -1,22 +1,24 @@
-/* eslint react/no-multi-comp: 0, react/prop-types: 0 */
-
+/* eslint-disable react/prop-types */
 import React from 'react';
-import { Modal } from 'reactstrap';
+import { Modal, ModalHeader, ModalBody } from 'reactstrap';
 
-const MovieModal = ({ isOpenWatchModel, urlMovieWatch, onBlurModal = () => {} }) => (
+const MovieModal = ({ isOpenWatchModel, urlMovieWatch, toggleClose = () => {} }) => (
   <div>
-    <Modal isOpen={isOpenWatchModel} onBlur={onBlurModal}>
-      <div className="embed-responsive embed-responsive-16by9">
-        <iframe
-          className="embed-responsive-item"
-          src={`https://www.youtube.com/embed/${urlMovieWatch}`}
-          allowFullScreen
-          title="Trailer"
-          frameBorder="0"
-          // eslint-disable-next-line react/jsx-no-duplicate-props
-          allowFullScreen
-        />
-      </div>
+    <Modal isOpen={isOpenWatchModel} size="lg">
+      <ModalHeader toggle={toggleClose}>Trailer</ModalHeader>
+      <ModalBody>
+        <div className="embed-responsive embed-responsive-16by9">
+          <iframe
+            className="embed-responsive-item"
+            src={`https://www.youtube.com/embed/${urlMovieWatch}`}
+            allowFullScreen
+            title="Trailer"
+            frameBorder="0"
+            // eslint-disable-next-line react/jsx-no-duplicate-props
+            allowFullScreen
+          />
+        </div>
+      </ModalBody>
     </Modal>
   </div>
 );

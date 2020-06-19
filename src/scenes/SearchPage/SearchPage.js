@@ -60,8 +60,6 @@ const SearchPage = () => {
     setPageNumber(1);
   };
 
-  console.log(state?.persons);
-
   return (
     <>
       <Header />

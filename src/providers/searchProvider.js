@@ -7,6 +7,7 @@ const initialState = {
   movieList: [],
   tvShowList: [],
   collections: [],
+  persons: [],
 };
 
 const SearchProvider = ({ children }) => {

@@ -6,6 +6,8 @@ const SearchReducer = (state, action) => {
       return { ...state, tvShowList: action.payload.tvShowList };
     case 'setCollection':
       return { ...state, collections: action.payload.collections };
+    case 'setPersons':
+      return { ...state, persons: action.payload.persons };
     default:
       return state;
   }

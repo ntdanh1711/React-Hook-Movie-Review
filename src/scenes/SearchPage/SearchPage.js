@@ -41,10 +41,14 @@ const SearchPage = () => {
       case 'collection':
         setRenderList(state?.collections);
         break;
+      case 'persons':
+        setRenderList(state?.persons);
+        break;
       default:
         break;
     }
-  }, [state, state.movieList, state.tvShowList, state.collections, filterTag]);
+  }, [state, state.movieList, state.tvShowList,
+    state.collections, state.persons, filterTag]);
 
   const onClickSearch = () => {
     setFilterTag('movie');
@@ -56,58 +60,55 @@ const SearchPage = () => {
     setPageNumber(1);
   };
 
+  console.log(state?.persons);
+
   return (
     <>
-      {(query && renderList?.results?.length > 0)
+      <Header />
+      <SearchBar
+        isLandingPage={false}
+        onClickSearch={onClickSearch}
+      />
+      {loading
         ? (
-          <>
-            <Header />
-            <SearchBar
-              isLandingPage={false}
-              onClickSearch={onClickSearch}
-            />
-            {loading
-              ? (
-                <div className={styles.loading}>
-                  <Spinner className={styles.loading__spinner} />
-                </div>
-              )
-              : (
-                <div className={styles.searchContainer}>
-                  <div className={styles.searchContainer__inner}>
-                    <SearchCategories
-                      onSelectCategory={onSelectCategory}
-                      selectedCategory={filterTag}
-                      movieCount={state?.movieList?.total_results}
-                      tvCount={state?.tvShowList?.total_results}
-                      collectionCount={state?.collections?.total_results}
+          <div className={styles.loading}>
+            <Spinner className={styles.loading__spinner} />
+          </div>
+        )
+        : (
+          <div className={styles.searchContainer}>
+            <div className={styles.searchContainer__inner}>
+              <SearchCategories
+                onSelectCategory={onSelectCategory}
+                selectedCategory={filterTag}
+                movieCount={state?.movieList?.total_results}
+                tvCount={state?.tvShowList?.total_results}
+                personCount={state?.persons?.total_results}
+                collectionCount={state?.collections?.total_results}
+              />
+              {(query && renderList?.results?.length > 0)
+                ? (
+                  <div className={styles.movieCardContainer}>
+                    <SearchList renderList={renderList} selectedTag={filterTag} />
+                    <Pagination
+                      itemClass="page-item"
+                      linkClass="page-link"
+                      activePage={renderList?.page}
+                      itemsCountPerPage={20}
+                      totalItemsCount={renderList?.total_results}
+                      pageRangeDisplayed={renderList?.total_pages < 5
+                        ? renderList.total_pages
+                        : 5}
+                      onChange={(pageNum) => { setPageNumber(pageNum); }}
                     />
-                    <div className={styles.movieCardContainer}>
-                      <SearchList renderList={renderList} />
-                      <Pagination
-                        itemClass="page-item"
-                        linkClass="page-link"
-                        activePage={renderList?.page}
-                        itemsCountPerPage={20}
-                        totalItemsCount={renderList?.total_results}
-                        pageRangeDisplayed={renderList?.total_pages < 5
-                          ? renderList.total_pages
-                          : 5}
-                        onChange={(pageNum) => { setPageNumber(pageNum); }}
-                      />
-                    </div>
                   </div>
-                </div>
-              )}
-          </>
-        ) : (
-          <>
-            <Header />
-            <SearchBar isLandingPage={false} />
-            <div className={styles.noContent}>
-              There are no movies that matched your query.
+                ) : (
+                  <div className={styles.noContent}>
+                    There are no movies that matched your query.
+                  </div>
+                )}
             </div>
-          </>
+          </div>
         )}
     </>
   );

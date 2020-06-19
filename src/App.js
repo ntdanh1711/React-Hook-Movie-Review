@@ -6,7 +6,7 @@ import {
 } from 'react-router-dom';
 import LandingPage from './scenes/LandingPage/LandingPage';
 import SearchPage from './scenes/SearchPage/SearchPage';
-import MovieDetail from './scenes/MovieDetail/MovieDetail';
+import MovieDetailPage from './scenes/MovieDetailPage/MovieDetailPage';
 import UtilsProvider from './providers/utilsProvider';
 import SearchProvider from './providers/searchProvider';
 import PopularProvider from './providers/popularProvider';
@@ -27,7 +27,10 @@ const App = () => (
             <SearchPage />
           </Route>
           <Route path="/movie/:id">
-            <MovieDetail />
+            <MovieDetailPage />
+          </Route>
+          <Route path="/tv/:id">
+            <MovieDetailPage />
           </Route>
         </SearchProvider>
       </UtilsProvider>

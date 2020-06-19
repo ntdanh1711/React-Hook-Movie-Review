@@ -1,21 +1,56 @@
+/* eslint-disable no-unused-expressions */
+/* eslint-disable react/prop-types */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { getDetailTV } from '../../services/movieDetailServices';
+import {
+  getDetailMovie, getDetailTV, getTVVideo, getMovieVideo,
+} from '../../services/movieDetailServices';
 import { BackdropImage, PosterAvatar } from '../../constants';
 
 import styles from './styles.scss';
 
-const MovieDetail = () => {
+const MovieDetail = ({ onClickOpenModal = () => {}, setVideoUrl = () => {} }) => {
   const { id } = useParams();
   const [movie, setMovie] = useState(null);
+  const [urlTrailerVideo, setUrlTrailerVideo] = useState('');
+  const hrefPaths = window.location.pathname.split('/');
+  const isMovie = hrefPaths[1] === 'movie';
+
   useEffect(() => {
-    getDetailTV(id)
-      .then((response) => response.json())
-      .then((data) => setMovie(data));
+    const pureIds = id && id.split('-');
+    // Get Movie Detail
+    pureIds?.length > 0 && isMovie
+      ? getDetailMovie(pureIds[0])
+        .then((data) => setMovie(data))
+      : getDetailTV(pureIds[0])
+        .then((data) => setMovie(data));
+
+    // Get URL TRAILER VIDIEO
+    pureIds?.length > 0 && isMovie
+      ? getMovieVideo(pureIds[0])
+        .then(
+          (data) => data?.results
+            && data?.results.length > 0
+            && setUrlTrailerVideo(data.results[0].key),
+        )
+      : getTVVideo(pureIds[0])
+        .then(
+          (data) => data?.results
+            && data?.results.length > 0
+            && setUrlTrailerVideo(data.results[0].key),
+        );
   }, [id]);
+
   const getYear = (date) => {
     const newDate = new Date(date);
     return newDate.getFullYear();
+  };
+
+  const openMovie = () => {
+    onClickOpenModal(true);
+    setVideoUrl(urlTrailerVideo);
   };
 
   return (
@@ -40,7 +75,13 @@ const MovieDetail = () => {
                   {movie.vote_average}
                   %
                 </div>
-                <div className={styles.movieDescription__control__rate__explain}>User Score</div>
+                <div className={styles.movieDescription__control__rate__explain}>
+                  User Score
+                </div>
+              </div>
+              <div className={styles.movieDescription__playTrailer} onClick={openMovie}>
+                <i className="fa fa-play" aria-hidden="true" />
+                <span>Play Trailer</span>
               </div>
               <div className={styles.movieDescription__tagLine}>{movie.tagline}</div>
               <div className={styles.movieDescription__overview}>

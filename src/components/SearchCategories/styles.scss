@@ -1,5 +1,10 @@
+.categoryContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  flex: 0.25;
+}
 .categoryTable {
-  flex: 0.2;
   margin-top: 10px;
   border-radius: 10px;
   margin-right: 50px;
@@ -33,4 +38,24 @@
   font-weight: normal!important;
   padding: 6px 15px !important;
   border-radius: 8px!important;
+}
+.searchTip {
+  margin-top: 20px;
+  color: #666;
+  margin-right: 50px;
+  &__icon {
+    background-image: url('https://www.themoviedb.org/assets/2/v4/glyphicons/basic/glyphicons-basic-636-circle-info-06837a451a09552349b182d84ae84f26308efee8f7e8ddca255bd5dbc4a66ea4.svg');
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 1em;
+    min-height: 1em;
+    width: 1em;
+    height: 1em;
+    line-height: inherit;
+    background-position: center center;
+    background-repeat: no-repeat;
+    color: inherit;
+    box-sizing: border-box;
+  }
 }

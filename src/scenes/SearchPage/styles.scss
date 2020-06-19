@@ -13,13 +13,16 @@
   justify-content: center;
   flex-direction: column;
   align-items: center;
-  flex: 0.8;
+  flex: 0.75;
 }
 
 .noContent {
-  display: flex;
-  justify-content: center;
-  margin: 50px 0;
+  @extend .movieCardContainer;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex: 0.8;
+  margin-top: 8px;
 }
 
 .loading {

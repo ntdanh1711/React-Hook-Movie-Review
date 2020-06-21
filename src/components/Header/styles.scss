@@ -1,24 +1,16 @@
-.paddingMenuItem {
-    padding-left: 10px;
-    padding-right: 10px;
-}
- 
 .header {
     background-color: rgb(6, 44, 86);
-    justify-content: center;
+    justify-content: space-between;
     display: flex;
 }
-.faSearch,
-.faPlus {
-  padding: 0 5px;
-  cursor: pointer;
+.link {
+  color: #fff;
+  font-weight: bold;
+  font-size: 20px;
 }
-
-.faSearch {
-  color: #6374eb;
-}
-.faPlus {
-  color: #ffffff;
+.link:hover {
+  text-decoration: none;
+  color: #fff;
 }
  
 @media screen and (min-width: 1280px) {

@@ -1,14 +1,13 @@
-/* eslint-disable react/prop-types */
 import React from 'react';
 import { Media } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 import { replaceAll } from '../../utils/customString';
 import emptyLogo from '../../assets/img/empty.jpg';
 import emptyPerson from '../../assets/img/emptyPerson.jpg';
 import styles from './styles.scss';
 
-// eslint-disable-next-line react/prop-types
 const SearchList = ({ renderList, selectedTag }) => {
   const imagePersonPath = (selectedTag === 'persons') ? 'w90_and_h90_face' : 'w94_and_h141_bestv2';
   const emptyAva = (selectedTag === 'persons') ? emptyPerson : emptyLogo;
@@ -43,6 +42,13 @@ const SearchList = ({ renderList, selectedTag }) => {
       </Media>
     </Link>
   ));
+};
+
+SearchList.propTypes = {
+  renderList: PropTypes.arrayOf(PropTypes.shape({
+    results: PropTypes.object.isRequired,
+  })),
+  selectedTag: PropTypes.string.isRequired,
 };
 
 export default SearchList;

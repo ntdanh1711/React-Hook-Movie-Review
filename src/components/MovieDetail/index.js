@@ -1,17 +1,14 @@
-/* eslint-disable no-unused-expressions */
-/* eslint-disable react/prop-types */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import {
-  getDetailMovie, getDetailTV, getTVVideo, getMovieVideo,
-} from '../../services/movieDetailServices';
+import PropTypes from 'prop-types';
+import { getDetailMovieOrTV, getVideo } from '../../services/movieDetailServices';
 import { BackdropImage, PosterAvatar } from '../../constants';
 
 import styles from './styles.scss';
 
-const MovieDetail = ({ onClickOpenModal = () => {}, setVideoUrl = () => {} }) => {
+const MovieDetail = ({ onClickOpenModal, setVideoUrl }) => {
   const { id } = useParams();
   const [movie, setMovie] = useState(null);
   const [urlTrailerVideo, setUrlTrailerVideo] = useState('');
@@ -20,27 +17,17 @@ const MovieDetail = ({ onClickOpenModal = () => {}, setVideoUrl = () => {} }) =>
 
   useEffect(() => {
     const pureIds = id && id.split('-');
-    // Get Movie Detail
-    pureIds?.length > 0 && isMovie
-      ? getDetailMovie(pureIds[0])
-        .then((data) => setMovie(data))
-      : getDetailTV(pureIds[0])
-        .then((data) => setMovie(data));
+    const type = (pureIds?.length > 0 && isMovie)
+      ? 'movie' : 'tv';
 
-    // Get URL TRAILER VIDIEO
-    pureIds?.length > 0 && isMovie
-      ? getMovieVideo(pureIds[0])
-        .then(
-          (data) => data?.results
-            && data?.results.length > 0
-            && setUrlTrailerVideo(data.results[0].key),
-        )
-      : getTVVideo(pureIds[0])
-        .then(
-          (data) => data?.results
-            && data?.results.length > 0
-            && setUrlTrailerVideo(data.results[0].key),
-        );
+    getDetailMovieOrTV(type, pureIds[0])
+      .then((data) => setMovie(data));
+    getVideo(type, pureIds[0])
+      .then(
+        (data) => data?.results
+          && data?.results.length > 0
+          && setUrlTrailerVideo(data.results[0].key),
+      );
   }, [id]);
 
   const getYear = (date) => {
@@ -95,6 +82,16 @@ const MovieDetail = ({ onClickOpenModal = () => {}, setVideoUrl = () => {} }) =>
       }
     </div>
   );
+};
+
+MovieDetail.propTypes = {
+  onClickOpenModal: PropTypes.func,
+  setVideoUrl: PropTypes.func,
+};
+
+MovieDetail.defaultProps = {
+  onClickOpenModal: () => {},
+  setVideoUrl: () => {},
 };
 
 export default MovieDetail;

@@ -1,25 +1,22 @@
 import { apiKey, searchUrl } from '../constants';
+import { success } from './commonServices';
 
-const success = (res) => (res.ok ? res.json() : Promise.resolve({}));
-
-export const searchMovie = (query, pageNumber) => fetch(`${searchUrl}/movie?api_key=${apiKey}&language=en-US&query=${query}&page=${pageNumber}&include_adult=false`)
+export const searchKeyWord = (query, pageNumber, type) => fetch(`${searchUrl}/${type}?api_key=${apiKey}&language=en-US&query=${query}&page=${pageNumber}&include_adult=false`)
   .then(success);
 
-export const searchTv = (query, pageNumber) => fetch(`${searchUrl}/tv?api_key=${apiKey}&language=en-US&query=${query}&page=${pageNumber}&include_adult=false`)
-  .then(success);
+const listFetchAction = (query, pageNumber) => {
+  const typeArray = ['movie', 'tv', 'collection', 'person'];
+  let actionArray = [];
+  // eslint-disable-next-line no-return-assign
+  typeArray.map((type) => (
+    actionArray = [...actionArray, searchKeyWord(query, pageNumber, type)]
+  ));
+  return actionArray;
+};
 
-export const searchCollection = (query, pageNumber) => fetch(`${searchUrl}/collection?api_key=${apiKey}&language=en-US&query=${query}&page=${pageNumber}&include_adult=false`)
-  .then(success);
-
-export const searchPerson = (query, pageNumber) => fetch(`${searchUrl}/person?api_key=${apiKey}&language=en-US&query=${query}&page=${pageNumber}&include_adult=false`)
-  .then(success);
-
-const fetchAllCategory = ({ query, pageNumber }, dispatch, setLoading) => Promise.all([
-  searchMovie(query, pageNumber),
-  searchTv(query, pageNumber),
-  searchCollection(query, pageNumber),
-  searchPerson(query, pageNumber),
-])
+const fetchAllCategory = ({ query, pageNumber }, dispatch, setLoading) => Promise.all(
+  listFetchAction(query, pageNumber),
+)
   .then(([movieList, tvShowList, collections, persons]) => {
     dispatch({ type: 'setMovieList', payload: { movieList } });
     dispatch({ type: 'setTvShowList', payload: { tvShowList } });

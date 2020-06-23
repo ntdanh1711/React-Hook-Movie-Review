@@ -1,14 +1,10 @@
 /* eslint-disable react/prop-types */
 import React, { useReducer } from 'react';
-import PopularReducer from '../reducers/popularReducer';
+import { PopularListReducer, initialState } from '../reducers/popularReducer';
 import PopularContext from '../context/popularContext';
 
-const initialState = {
-  popularList: [],
-};
-
 const PopularProvider = ({ children }) => {
-  const [state, dispatch] = useReducer(PopularReducer, initialState);
+  const [state, dispatch] = useReducer(PopularListReducer, initialState);
 
   return (
     <PopularContext.Provider value={{

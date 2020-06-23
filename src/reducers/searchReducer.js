@@ -1,3 +1,10 @@
+const initialState = {
+  movieList: [],
+  tvShowList: [],
+  collections: [],
+  persons: [],
+};
+
 const SearchReducer = (state, action) => {
   switch (action.type) {
     case 'setMovieList':
@@ -8,9 +15,11 @@ const SearchReducer = (state, action) => {
       return { ...state, collections: action.payload.collections };
     case 'setPersons':
       return { ...state, persons: action.payload.persons };
+    case 'resetSearchList':
+      return initialState;
     default:
       return state;
   }
 };
 
-export default SearchReducer;
+export { SearchReducer, initialState };

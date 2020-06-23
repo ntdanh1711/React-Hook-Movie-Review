@@ -1,8 +1,9 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
 import { Modal, ModalHeader, ModalBody } from 'reactstrap';
+import PropTypes from 'prop-types';
 
-const MovieModal = ({ isOpenWatchModel, urlMovieWatch, toggleClose = () => {} }) => (
+const MovieModal = ({ isOpenWatchModel, urlMovieWatch, toggleClose }) => (
   <div>
     <Modal isOpen={isOpenWatchModel} size="lg">
       <ModalHeader toggle={toggleClose}>Trailer</ModalHeader>
@@ -22,5 +23,15 @@ const MovieModal = ({ isOpenWatchModel, urlMovieWatch, toggleClose = () => {} })
     </Modal>
   </div>
 );
+
+MovieModal.propTypes = {
+  isOpenWatchModel: PropTypes.bool.isRequired,
+  urlMovieWatch: PropTypes.string.isRequired,
+  toggleClose: PropTypes.func,
+};
+
+MovieModal.defaultProps = {
+  toggleClose: () => {},
+};
 
 export default MovieModal;

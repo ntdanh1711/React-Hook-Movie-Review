@@ -1,5 +1,7 @@
 /* eslint-disable camelcase */
-import React, { useState, useEffect, useContext } from 'react';
+import React, {
+  useState, useEffect, useContext,
+} from 'react';
 import { Spinner } from 'reactstrap';
 import Pagination from 'react-js-pagination';
 
@@ -18,7 +20,7 @@ const SearchPage = () => {
   const { state, dispatch } = useContext(SearchContext);
   const query = getQueryParam('query');
 
-  const [renderList, setRenderList] = useState();
+  const [renderList, setRenderList] = useState([]);
   const [filterTag, setFilterTag] = useState('movie');
   const [pageNumber, setPageNumber] = useState(renderList?.page || 1);
   const [loading, setLoading] = useState(false);
@@ -26,8 +28,10 @@ const SearchPage = () => {
   useEffect(() => {
     if (query) {
       setLoading(true);
+      searchAll({ query, pageNumber }, dispatch, setLoading);
+    } else {
+      dispatch({ type: 'resetSearchList' });
     }
-    searchAll({ query, pageNumber }, dispatch, setLoading);
   }, [query, pageNumber]);
 
   useEffect(() => {
@@ -50,12 +54,7 @@ const SearchPage = () => {
   }, [state, state.movieList, state.tvShowList,
     state.collections, state.persons, filterTag]);
 
-  const onClickSearch = () => {
-    setFilterTag('movie');
-    setPageNumber(1);
-  };
-
-  const onSelectCategory = (tag) => {
+  const onSearchOrFilter = (tag) => {
     setFilterTag(tag);
     setPageNumber(1);
   };
@@ -65,7 +64,7 @@ const SearchPage = () => {
       <Header />
       <SearchBar
         isLandingPage={false}
-        onClickSearch={onClickSearch}
+        onClickSearch={() => onSearchOrFilter('movie')}
       />
       {loading
         ? (
@@ -77,7 +76,7 @@ const SearchPage = () => {
           <div className={styles.searchContainer}>
             <div className={styles.searchContainer__inner}>
               <SearchCategories
-                onSelectCategory={onSelectCategory}
+                onSelectCategory={onSearchOrFilter}
                 selectedCategory={filterTag}
                 movieCount={state?.movieList?.total_results}
                 tvCount={state?.tvShowList?.total_results}

@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { Input } from 'reactstrap';
 import { Link, useHistory } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 import UtilsContext from '../../context/utilsContext';
 import styles from './styles.scss';
@@ -39,6 +40,15 @@ const SearchBar = ({ isLandingPage, onClickSearch = () => {} }) => {
       </div>
     </div>
   );
+};
+
+SearchBar.propTypes = {
+  isLandingPage: PropTypes.bool.isRequired,
+  onClickSearch: PropTypes.func,
+};
+
+SearchBar.defaultProps = {
+  onClickSearch: () => {},
 };
 
 export default SearchBar;

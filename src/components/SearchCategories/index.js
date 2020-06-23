@@ -1,16 +1,14 @@
-/* eslint-disable react/prop-types */
 import React from 'react';
 import { ListGroup, ListGroupItem, Badge } from 'reactstrap';
+import PropTypes from 'prop-types';
 
 import numberWithCommas from '../../utils/numberWithCommas';
 import styles from './styles.scss';
 
-// eslint-disable-next-line react/prop-types
-// eslint-disable-next-line arrow-body-style
 const SearchCategories = ({
-  onSelectCategory, movieCount = 0,
-  tvCount = 0, collectionCount = 0,
-  personCount = 0, selectedCategory,
+  onSelectCategory, movieCount,
+  tvCount, collectionCount,
+  personCount, selectedCategory,
 }) => (
   <div className={styles.categoryContainer}>
     <ListGroup className={styles.categoryTable}>
@@ -64,5 +62,22 @@ const SearchCategories = ({
     </p>
   </div>
 );
+
+SearchCategories.propTypes = {
+  selectedCategory: PropTypes.string.isRequired,
+  movieCount: PropTypes.number,
+  tvCount: PropTypes.number,
+  collectionCount: PropTypes.number,
+  personCount: PropTypes.number,
+  onSelectCategory: PropTypes.func,
+};
+
+SearchCategories.defaultProps = {
+  movieCount: 0,
+  tvCount: 0,
+  collectionCount: 0,
+  personCount: 0,
+  onSelectCategory: () => {},
+};
 
 export default SearchCategories;
